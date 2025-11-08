@@ -1,0 +1,156 @@
+/* Variables para colores del atardecer - ¡Puedes ajustarlos! */
+:root {
+    --color-sky-top: #ffccbc; /* Naranja muy suave, casi durazno */
+    --color-sky-middle: #ffab91; /* Naranja más vibrante */
+    --color-sky-bottom: #ff7043; /* Naranja rojizo */
+    --color-cloud-light: #fbe9e7; /* Rosado clarito para nubes */
+    --color-cloud-dark: #ffcdd2; /* Rosado más oscuro para nubes */
+    --color-sun-glow: #fff9c4; /* Brillo del sol */
+    --color-text-dark: #424242; /* Color de texto oscuro */
+    --color-text-light: #fff; /* Color de texto claro */
+    --color-card-bg: rgba(255, 255, 255, 0.85); /* Fondo de tarjeta semitransparente */
+}
+
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif; /* Fuente principal para el cuerpo */
+    color: var(--color-text-dark);
+    line-height: 1.6;
+    overflow-x: hidden; /* Evita scroll horizontal inesperado */
+    min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la ventana */
+    display: flex; /* Para centrar el contenido verticalmente si es corto */
+    flex-direction: column; /* Organiza el contenido en columna */
+}
+
+/* Contenedor del fondo de atardecer con degradado y animación */
+.sunset-background {
+    position: fixed; /* Fija el fondo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Envía el fondo detrás del contenido */
+    background: linear-gradient(to bottom, 
+                var(--color-sky-top) 0%, 
+                var(--color-sky-middle) 50%, 
+                var(--color-sky-bottom) 100%);
+    background-size: 400% 400%; /* Tamaño para la animación del degradado */
+    animation: sunsetAnimation 30s ease infinite; /* Animación lenta del degradado */
+}
+
+/* Animación del degradado del atardecer */
+@keyframes sunsetAnimation {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
+/* Estilos para el encabezado */
+header {
+    text-align: center;
+    padding: 60px 20px 30px;
+    color: var(--color-text-light); /* Texto claro sobre el atardecer */
+    position: relative;
+    z-index: 1; /* Asegura que el header esté sobre el fondo */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4); /* Sombra para que resalte */
+}
+
+header h1 {
+    font-family: 'Dancing Script', cursive; /* Fuente elegante para el título principal */
+    font-size: 3.5em; /* Tamaño grande para el título */
+    margin-bottom: 5px;
+}
+
+header h2 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5em;
+    font-weight: 300;
+    margin-top: 0;
+}
+
+/* Estilos para la tarjeta de contenido principal */
+.content-card {
+    background-color: var(--color-card-bg); /* Fondo semi-transparente */
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    text-align: left; /* Alinea el texto a la izquierda dentro de la tarjeta */
+    position: relative;
+    z-index: 1; /* Asegura que la tarjeta esté sobre el fondo */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque detrás de la tarjeta (moderno) */
+    -webkit-backdrop-filter: blur(5px); /* Para compatibilidad con Safari */
+}
+
+.content-card p {
+    margin-bottom: 1em;
+    font-size: 1.1em;
+}
+
+.content-card h3 {
+    font-family: 'Dancing Script', cursive;
+    text-align: center;
+    font-size: 2.2em;
+    color: var(--color-sky-bottom);
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+/* Sección de galería de imágenes */
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* 2 columnas en pantallas pequeñas, más en grandes */
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.image-grid img {
+    width: 100%;
+    height: 150px; /* Altura fija para las imágenes, manteniendo proporción */
+    object-fit: cover; /* Recorta la imagen para que encaje y llene el espacio */
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease; /* Efecto al pasar el mouse */
+}
+
+.image-grid img:hover {
+    transform: scale(1.05); /* Ligeramente más grande al pasar el mouse */
+}
+
+.caption {
+    text-align: center;
+    margin-top: 25px;
+    font-style: italic;
+    color: var(--color-sky-bottom);
+}
+
+/* Estilos para el pie de página */
+footer {
+    text-align: center;
+    padding: 30px 20px 50px;
+    color: var(--color-text-light);
+    font-size: 0.9em;
+    position: relative;
+    z-index: 1;
+    margin-top: auto; /* Empuja el footer hacia abajo */
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive para pantallas más pequeñas */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.5em;
+    }
+    header h2 {
+        font-size: 1.2em;
+    }
+    .content-card {
+        margin: 20px auto;
+        padding: 25px;
+    }
+    .image-grid {
+        grid-template-columns: 1fr; /* Una sola columna en móviles */
+    }
+}
