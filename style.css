@@ -1,8 +1,8 @@
-/* Variables para colores del atardecer - ¡Puedes ajustarlos! */
+/* Variables para colores del atardecer - ¡Ajusta si quieres cambiar los tonos! */
 :root {
     --color-sky-top: #ffccbc; /* Naranja muy suave, casi durazno */
     --color-sky-middle: #ffab91; /* Naranja más vibrante */
-    --color-sky-bottom: #ff7043; /* Naranja rojizo */
+    --color-sky-bottom: #ff7043; /* Naranja rojizo, para simular la cercanía al horizonte */
     --color-cloud-light: #fbe9e7; /* Rosado clarito para nubes */
     --color-cloud-dark: #ffcdd2; /* Rosado más oscuro para nubes */
     --color-sun-glow: #fff9c4; /* Brillo del sol */
@@ -13,51 +13,77 @@
 
 body {
     margin: 0;
-    font-family: 'Open Sans', sans-serif; /* Fuente principal para el cuerpo */
+    font-family: 'Open Sans', sans-serif; 
     color: var(--color-text-dark);
     line-height: 1.6;
-    overflow-x: hidden; /* Evita scroll horizontal inesperado */
-    min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la ventana */
-    display: flex; /* Para centrar el contenido verticalmente si es corto */
-    flex-direction: column; /* Organiza el contenido en columna */
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; 
 }
 
-/* Contenedor del fondo de atardecer con degradado y animación */
+/* -------------------------------------- */
+/* ESTILOS DEL ATARDECER ANIMADO (CLAVE) */
+/* -------------------------------------- */
 .sunset-background {
-    position: fixed; /* Fija el fondo */
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Envía el fondo detrás del contenido */
+    z-index: -1; 
+    
+    /* Degradado del atardecer usando las variables de color */
     background: linear-gradient(to bottom, 
                 var(--color-sky-top) 0%, 
                 var(--color-sky-middle) 50%, 
                 var(--color-sky-bottom) 100%);
-    background-size: 400% 400%; /* Tamaño para la animación del degradado */
-    animation: sunsetAnimation 30s ease infinite; /* Animación lenta del degradado */
+    
+    background-size: 400% 400%; 
+
+    /* Simulación de nubes y toques de luz con múltiples sombras desenfocadas */
+    box-shadow: 
+        /* Nube grande rosada/naranja en la parte superior izquierda */
+        20vw 20vh 150px 50px var(--color-cloud-dark),
+        /* Nube larga y clara en el centro */
+        -50vw 40vh 120px 40px var(--color-cloud-light),
+        /* Toque de luz anaranjado rojizo en la parte inferior derecha (simulando sol bajo) */
+        100vw 80vh 180px 60px var(--color-sky-bottom),
+        /* Toque de luz brillante del sol */
+        -10vw 95vh 100px 30px var(--color-sun-glow);
+    
+    /* Aplicación de animaciones */
+    animation: sunsetAnimation 30s ease infinite, cloudMovement 45s linear infinite alternate;
 }
 
-/* Animación del degradado del atardecer */
+/* Animación del degradado (movimiento sutil del cielo) */
 @keyframes sunsetAnimation {
     0% { background-position: 0% 0%; }
     50% { background-position: 100% 100%; }
     100% { background-position: 0% 0%; }
 }
 
-/* Estilos para el encabezado */
+/* Animación del movimiento de las nubes */
+@keyframes cloudMovement {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(10px, -5px); }
+}
+
+/* -------------------------------------- */
+/* ESTILOS DEL CONTENIDO */
+/* -------------------------------------- */
 header {
     text-align: center;
     padding: 60px 20px 30px;
-    color: var(--color-text-light); /* Texto claro sobre el atardecer */
+    color: var(--color-text-light); 
     position: relative;
-    z-index: 1; /* Asegura que el header esté sobre el fondo */
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4); /* Sombra para que resalte */
+    z-index: 1; 
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4); 
 }
 
 header h1 {
-    font-family: 'Dancing Script', cursive; /* Fuente elegante para el título principal */
-    font-size: 3.5em; /* Tamaño grande para el título */
+    font-family: 'Dancing Script', cursive; 
+    font-size: 3.5em; 
     margin-bottom: 5px;
 }
 
@@ -68,19 +94,18 @@ header h2 {
     margin-top: 0;
 }
 
-/* Estilos para la tarjeta de contenido principal */
 .content-card {
-    background-color: var(--color-card-bg); /* Fondo semi-transparente */
+    background-color: var(--color-card-bg); 
     max-width: 800px;
     margin: 40px auto;
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    text-align: left; /* Alinea el texto a la izquierda dentro de la tarjeta */
+    text-align: left; 
     position: relative;
-    z-index: 1; /* Asegura que la tarjeta esté sobre el fondo */
-    backdrop-filter: blur(5px); /* Efecto de desenfoque detrás de la tarjeta (moderno) */
-    -webkit-backdrop-filter: blur(5px); /* Para compatibilidad con Safari */
+    z-index: 1; 
+    backdrop-filter: blur(5px); /* Efecto de desenfoque moderno */
+    -webkit-backdrop-filter: blur(5px); 
 }
 
 .content-card p {
@@ -97,10 +122,10 @@ header h2 {
     margin-bottom: 20px;
 }
 
-/* Sección de galería de imágenes */
+/* Estilos de la Galería */
 .image-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* 2 columnas en pantallas pequeñas, más en grandes */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
     gap: 20px;
     justify-content: center;
     margin-top: 20px;
@@ -108,15 +133,15 @@ header h2 {
 
 .image-grid img {
     width: 100%;
-    height: 150px; /* Altura fija para las imágenes, manteniendo proporción */
-    object-fit: cover; /* Recorta la imagen para que encaje y llene el espacio */
+    height: 150px; 
+    object-fit: cover; 
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease; /* Efecto al pasar el mouse */
+    transition: transform 0.3s ease; 
 }
 
 .image-grid img:hover {
-    transform: scale(1.05); /* Ligeramente más grande al pasar el mouse */
+    transform: scale(1.05); 
 }
 
 .caption {
@@ -134,7 +159,7 @@ footer {
     font-size: 0.9em;
     position: relative;
     z-index: 1;
-    margin-top: auto; /* Empuja el footer hacia abajo */
+    margin-top: auto; 
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
 }
 
@@ -151,6 +176,6 @@ footer {
         padding: 25px;
     }
     .image-grid {
-        grid-template-columns: 1fr; /* Una sola columna en móviles */
+        grid-template-columns: 1fr; 
     }
 }
