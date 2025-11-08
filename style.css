@@ -1,14 +1,16 @@
-/* Variables para colores del atardecer - ¡Ajusta si quieres cambiar los tonos! */
+/* Variables para colores (se mantienen para el contenido) */
 :root {
-    --color-sky-top: #ffccbc; /* Naranja muy suave, casi durazno */
-    --color-sky-middle: #ffab91; /* Naranja más vibrante */
-    --color-sky-bottom: #ff7043; /* Naranja rojizo, para simular la cercanía al horizonte */
-    --color-cloud-light: #fbe9e7; /* Rosado clarito para nubes */
-    --color-cloud-dark: #ffcdd2; /* Rosado más oscuro para nubes */
-    --color-sun-glow: #fff9c4; /* Brillo del sol */
-    --color-text-dark: #424242; /* Color de texto oscuro */
-    --color-text-light: #fff; /* Color de texto claro */
-    --color-card-bg: rgba(255, 255, 255, 0.85); /* Fondo de tarjeta semitransparente */
+    --color-sky-top: #ffccbc;
+    --color-sky-middle: #ffab91;
+    --color-sky-bottom: #ff7043;
+    --color-cloud-light: #fbe9e7;
+    --color-cloud-dark: #ffcdd2;
+    --color-sun-glow: #fff9c4;
+    --color-text-dark: #424242;
+    --color-text-light: #fff;
+    --color-card-bg: rgba(255, 255, 255, 0.85);
+    /* Nuevo color para la capa de tono sobre la imagen */
+    --color-overlay: rgba(255, 127, 80, 0.15); /* Color coral con poca opacidad */
 }
 
 body {
@@ -23,7 +25,7 @@ body {
 }
 
 /* -------------------------------------- */
-/* ESTILOS DEL ATARDECER ANIMADO (CLAVE) */
+/* FONDO CON IMAGEN DE ATARDECER (CORRECCIÓN) */
 /* -------------------------------------- */
 .sunset-background {
     position: fixed; 
@@ -33,44 +35,31 @@ body {
     height: 100%;
     z-index: -1; 
     
-    /* Degradado del atardecer usando las variables de color */
-    background: linear-gradient(to bottom, 
-                var(--color-sky-top) 0%, 
-                var(--color-sky-middle) 50%, 
-                var(--color-sky-bottom) 100%);
+    /* 1. Usar una imagen como fondo */
+    background-image: 
+        /* Capa de color para dar un toque rosado/cálido uniforme y bajar contraste */
+        linear-gradient(var(--color-overlay), var(--color-overlay)), 
+        /* RUTA DE LA IMAGEN: ¡Asegúrate de que este nombre sea correcto! */
+        url('atardecer-fondo.jpg'); 
+        
+    /* 2. Ajustar cómo se muestra la imagen */
+    background-size: cover; /* Cubre toda la pantalla sin distorsionar */
+    background-position: center bottom; /* Enfoca el atardecer si la foto lo tiene abajo */
+    background-repeat: no-repeat;
     
-    background-size: 400% 400%; 
-
-    /* Simulación de nubes y toques de luz con múltiples sombras desenfocadas */
-    box-shadow: 
-        /* Nube grande rosada/naranja en la parte superior izquierda */
-        20vw 20vh 150px 50px var(--color-cloud-dark),
-        /* Nube larga y clara en el centro */
-        -50vw 40vh 120px 40px var(--color-cloud-light),
-        /* Toque de luz anaranjado rojizo en la parte inferior derecha (simulando sol bajo) */
-        100vw 80vh 180px 60px var(--color-sky-bottom),
-        /* Toque de luz brillante del sol */
-        -10vw 95vh 100px 30px var(--color-sun-glow);
-    
-    /* Aplicación de animaciones */
-    animation: sunsetAnimation 30s ease infinite, cloudMovement 45s linear infinite alternate;
+    /* 3. Animación de zoom muy sutil para dar vida al fondo */
+    animation: zoomOutSlightly 60s linear infinite alternate;
 }
 
-/* Animación del degradado (movimiento sutil del cielo) */
-@keyframes sunsetAnimation {
-    0% { background-position: 0% 0%; }
-    50% { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
+@keyframes zoomOutSlightly {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
 }
 
-/* Animación del movimiento de las nubes */
-@keyframes cloudMovement {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(10px, -5px); }
-}
+/* Los keyframes y estilos anteriores de degradado y nubes CSS han sido ELIMINADOS */
 
 /* -------------------------------------- */
-/* ESTILOS DEL CONTENIDO */
+/* ESTILOS DEL CONTENIDO (SE MANTIENEN IGUAL) */
 /* -------------------------------------- */
 header {
     text-align: center;
@@ -80,6 +69,8 @@ header {
     z-index: 1; 
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4); 
 }
+
+/* ... (El resto de estilos de h1, h2, content-card, image-grid y footer siguen aquí) ... */
 
 header h1 {
     font-family: 'Dancing Script', cursive; 
@@ -104,7 +95,7 @@ header h2 {
     text-align: left; 
     position: relative;
     z-index: 1; 
-    backdrop-filter: blur(5px); /* Efecto de desenfoque moderno */
+    backdrop-filter: blur(5px); 
     -webkit-backdrop-filter: blur(5px); 
 }
 
@@ -122,7 +113,6 @@ header h2 {
     margin-bottom: 20px;
 }
 
-/* Estilos de la Galería */
 .image-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
@@ -151,7 +141,6 @@ header h2 {
     color: var(--color-sky-bottom);
 }
 
-/* Estilos para el pie de página */
 footer {
     text-align: center;
     padding: 30px 20px 50px;
